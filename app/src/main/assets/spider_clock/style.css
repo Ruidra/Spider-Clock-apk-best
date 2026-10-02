@@ -42,15 +42,27 @@ body {
 #wBody {
   position: relative;
   aspect-ratio: 1/1;
-  /* Clock numerals (especially 10, 9, 8 on left and 2, 3, 4 on right)
-     extend 45% beyond the 300px core box.
-     Using min(52vw, 36vh) ensures all 12 numbers fit with ample padding
-     and are never clipped on any mobile device. */
-  width: min(52vw, 36vh);
-  height: min(52vw, 36vh);
-  max-width: 250px;
-  max-height: 250px;
+  /* Scaled up generously so the clock is prominent, bold and easily legible on mobile screens,
+     while fitting all 12 dial numerals (including 10, 9, 8, 2, 3, 4) with clear edge padding. */
+  width: min(68vw, 46vh);
+  height: min(68vw, 46vh);
+  max-width: 330px;
+  max-height: 330px;
   margin: auto;
+}
+
+@media (max-width: 340px) {
+  #wBody {
+    width: min(64vw, 42vh);
+    height: min(64vw, 42vh);
+  }
+}
+
+@media (orientation: landscape) {
+  #wBody {
+    width: min(48vw, 65vh);
+    height: min(48vw, 65vh);
+  }
 }
 
 #watch {

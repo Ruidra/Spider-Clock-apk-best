@@ -172,47 +172,13 @@ fun ClockScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(6.dp))
-
-                // Mode switch chip: Original GitHub Repo Clock vs Native Compose
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    FilterChip(
-                        selected = useOriginalRepoClock,
-                        onClick = { viewModel.setUseOriginalRepoClock(true) },
-                        label = { Text("🕷️ Original Repo Clock", fontSize = 11.sp) },
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = theme.accentColor,
-                            selectedLabelColor = Color.White,
-                            containerColor = theme.cardBackground,
-                            labelColor = Color.White.copy(alpha = 0.7f)
-                        ),
-                        modifier = Modifier.testTag("mode_original_repo")
-                    )
-
-                    FilterChip(
-                        selected = !useOriginalRepoClock,
-                        onClick = { viewModel.setUseOriginalRepoClock(false) },
-                        label = { Text("🕸️ Stylized Canvas", fontSize = 11.sp) },
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = theme.accentColor,
-                            selectedLabelColor = Color.White,
-                            containerColor = theme.cardBackground,
-                            labelColor = Color.White.copy(alpha = 0.7f)
-                        ),
-                        modifier = Modifier.testTag("mode_stylized_canvas")
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 // Digital Time Display
                 Text(
                     text = timeFormatter.format(Date(currentTimeMillis)),
                     color = Color.White,
-                    fontSize = 28.sp,
+                    fontSize = 30.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.ExtraBold,
                     letterSpacing = 1.sp,
@@ -235,24 +201,9 @@ fun ClockScreen(
                     .padding(vertical = 2.dp),
                 contentAlignment = Alignment.Center
             ) {
-                if (useOriginalRepoClock) {
-                    // Exact original clock from piyush-soni777/ps-spider-clock
-                    OriginalSpiderClockView(
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    // Native stylized Compose canvas clock
-                    SpiderClockCanvas(
-                        modifier = Modifier.fillMaxSize(),
-                        primaryColor = theme.primaryColor,
-                        secondaryColor = theme.secondaryColor,
-                        accentColor = theme.accentColor,
-                        backgroundColor = Color.Transparent,
-                        showInteractiveThread = true,
-                        isSmoothSecond = isSmoothSecond,
-                        showCogs = showCogs
-                    )
-                }
+                OriginalSpiderClockView(
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 
             // Bottom Section: Interaction hint and Quick Nap buttons
@@ -275,10 +226,7 @@ fun ClockScreen(
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = if (useOriginalRepoClock)
-                            "Original PS Spider Clock (HTML5/SVG/GSAP Morphing Hands)"
-                        else
-                            "Pull spider silk to stretch · Tap spider to vibrate",
+                        text = "🕷️ Spider Mechanical Clock · Silk & Morphing Hands",
                         color = theme.secondaryColor.copy(alpha = 0.7f),
                         fontSize = 11.sp
                     )
