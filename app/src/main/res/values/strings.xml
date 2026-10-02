@@ -11,4 +11,7 @@
     <string name="alarm_action_dismiss">Dismiss</string>
     <string name="test_notification_title">Spider Alert Active</string>
     <string name="test_notification_body">Your arachnid guardian is actively guarding your schedule.</string>
+    <string name="creator_name">Shrihan Rudra Biswas</string>
+    <string name="creator_attribution">Made by Shrihan Rudra Biswas</string>
+    <string name="creator_role">Creator of this app</string>
 </resources>

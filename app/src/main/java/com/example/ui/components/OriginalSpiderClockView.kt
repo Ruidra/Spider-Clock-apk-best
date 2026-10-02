@@ -28,7 +28,8 @@ fun OriginalSpiderClockView(
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
                 setBackgroundColor(AndroidColor.TRANSPARENT)
-                setLayerType(WebView.LAYER_TYPE_HARDWARE, null)
+                // Use software layer type to avoid Mesa DRM rendernode failures on virtualized emulator GPUs
+                setLayerType(WebView.LAYER_TYPE_SOFTWARE, null)
                 isVerticalScrollBarEnabled = false
                 isHorizontalScrollBarEnabled = false
 
@@ -36,11 +37,20 @@ fun OriginalSpiderClockView(
                     javaScriptEnabled = true
                     domStorageEnabled = true
                     allowFileAccess = true
+                    allowContentAccess = true
                     loadWithOverviewMode = false
                     useWideViewPort = false
                     cacheMode = WebSettings.LOAD_NO_CACHE
                 }
 
+                webChromeClient = object : android.webkit.WebChromeClient() {
+                    override fun onConsoleMessage(consoleMessage: android.webkit.ConsoleMessage?): Boolean {
+                        consoleMessage?.let {
+                            android.util.Log.d("SpiderClockJS", "${it.message()} -- line ${it.lineNumber()}")
+                        }
+                        return true
+                    }
+                }
                 webViewClient = object : WebViewClient() {}
                 loadUrl("file:///android_asset/spider_clock/index.html")
             }

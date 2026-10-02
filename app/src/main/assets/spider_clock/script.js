@@ -1,5 +1,6 @@
 let select = e => document.querySelector(e);
 let selectAll = e => document.querySelectorAll(e);
+let changingHr = false;
 
 const face01 = select("#face01").getAttribute("d"),
 	face02 = select("#face01").getAttribute("d"),

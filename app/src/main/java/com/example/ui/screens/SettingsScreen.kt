@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
@@ -371,7 +372,63 @@ fun SettingsScreen(
                 }
             }
 
-            // 4. About Project
+            // 4. Creator of this App
+            Card(
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = currentTheme.cardBackground),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(1.dp, currentTheme.accentColor.copy(alpha = 0.5f), RoundedCornerShape(20.dp))
+                    .testTag("app_creator_card")
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(46.dp)
+                                .clip(CircleShape)
+                                .background(currentTheme.accentColor.copy(alpha = 0.2f))
+                                .border(1.dp, currentTheme.accentColor, CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = "Creator",
+                                tint = currentTheme.accentColor,
+                                modifier = Modifier.size(26.dp)
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.width(14.dp))
+
+                        Column {
+                            Text(
+                                text = "Creator of this app",
+                                color = currentTheme.accentColor,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = 0.5.sp
+                            )
+                            Text(
+                                text = "Made by Shrihan Rudra Biswas",
+                                color = Color.White,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontSize = 17.sp
+                            )
+                            Text(
+                                text = "Lead Application Engineer & Creator",
+                                color = Color.White.copy(alpha = 0.65f),
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
+                }
+            }
+
+            // 5. About Project
             Card(
                 shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(containerColor = currentTheme.cardBackground.copy(alpha = 0.6f)),
@@ -385,7 +442,7 @@ fun SettingsScreen(
                     }
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        text = "Original spider clock concept by Piyush Soni (ps-spider-clock), converted into a native Android mobile application featuring interactive silk physics, high-priority push notifications, wake-up challenges, Room persistence, and reliable wake alarms.",
+                        text = "Made by Shrihan Rudra Biswas (Creator of this app). Original mechanical clock visual art concept inspired by Piyush Soni (ps-spider-clock), fully built into a native Android clock application with customizable timers, alarms, wake-up challenges, and background push notifications.",
                         color = Color.White.copy(alpha = 0.65f),
                         fontSize = 12.sp,
                         lineHeight = 16.sp
