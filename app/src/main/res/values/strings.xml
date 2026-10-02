@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Spider Clock</string>
+    <string name="tab_clock">Clock</string>
+    <string name="tab_alarms">Alarms</string>
+    <string name="tab_timer">Timer</string>
+    <string name="tab_settings">Settings</string>
+    <string name="alarm_ringing_title">Spider Alarm Alert!</string>
+    <string name="alarm_channel_name">Spider Alarms &amp; Wake-up</string>
+    <string name="alarm_channel_description">High priority wake-up alarms and event reminders</string>
+    <string name="alarm_action_snooze">Snooze</string>
+    <string name="alarm_action_dismiss">Dismiss</string>
+    <string name="test_notification_title">Spider Alert Active</string>
+    <string name="test_notification_body">Your arachnid guardian is actively guarding your schedule.</string>
+</resources>

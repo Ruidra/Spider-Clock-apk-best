@@ -1,0 +1,71 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0px;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  color: #FFF;
+}
+
+.vline {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  height: 50vh;
+  width: 2px;
+  background-color: #FFF;
+  z-index: -1;
+  opacity: 0.5;
+  visibility: hidden;
+}
+
+.gsapWrapper {
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+#wBody {
+  position: relative;
+  aspect-ratio: 1/1;
+  /* Clock numerals (especially 10, 9, 8 on left and 2, 3, 4 on right)
+     extend 45% beyond the 300px core box.
+     Using min(52vw, 36vh) ensures all 12 numbers fit with ample padding
+     and are never clipped on any mobile device. */
+  width: min(52vw, 36vh);
+  height: min(52vw, 36vh);
+  max-width: 250px;
+  max-height: 250px;
+  margin: auto;
+}
+
+#watch {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  overflow: visible;
+}
+
+#watch svg {
+  overflow: visible;
+  width: 100%;
+  height: 100%;
+}

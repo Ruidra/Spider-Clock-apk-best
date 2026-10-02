@@ -1,0 +1,6 @@
+{
+  "name": "Spider Clock",
+  "description": "Gothic spider-themed animated clock with interactive arachnid hands, loud wake-up alarms, snooze puzzles, and push notification alerts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
