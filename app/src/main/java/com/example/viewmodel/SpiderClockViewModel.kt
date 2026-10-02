@@ -4,7 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alarm.AlarmScheduler
+import com.example.alarm.AlarmSoundType
 import com.example.alarm.NotificationHelper
+import com.example.alarm.SoundManager
 import com.example.data.AlarmRepository
 import com.example.data.SpiderClockDatabase
 import com.example.model.AlarmCategory
@@ -227,14 +229,36 @@ class SpiderClockViewModel(application: Application) : AndroidViewModel(applicat
 
     // --- Timer Actions ---
     fun setTimerSeconds(seconds: Int) {
-        if (!_timerRunning.value) {
+        if (!_timerRunning.value && seconds > 0) {
             _timerTotalSeconds.value = seconds
             _timerRemainingSeconds.value = seconds
         }
     }
 
+    fun setCustomTimer(hours: Int, minutes: Int, seconds: Int) {
+        val total = (hours * 3600) + (minutes * 60) + seconds
+        if (total > 0) {
+            pauseTimer()
+            _timerTotalSeconds.value = total
+            _timerRemainingSeconds.value = total
+        }
+    }
+
+    fun addTimerTime(secondsToAdd: Int) {
+        if (!_timerRunning.value) {
+            val newTotal = _timerTotalSeconds.value + secondsToAdd
+            setTimerSeconds(newTotal)
+        } else {
+            _timerRemainingSeconds.value += secondsToAdd
+            _timerTotalSeconds.value += secondsToAdd
+        }
+    }
+
     fun startTimer() {
         if (_timerRunning.value) return
+        if (_timerRemainingSeconds.value <= 0) {
+            _timerRemainingSeconds.value = _timerTotalSeconds.value
+        }
         _timerRunning.value = true
         timerJob = viewModelScope.launch {
             while (_timerRunning.value && _timerRemainingSeconds.value > 0) {
@@ -243,7 +267,18 @@ class SpiderClockViewModel(application: Application) : AndroidViewModel(applicat
             }
             if (_timerRemainingSeconds.value <= 0) {
                 _timerRunning.value = false
-                NotificationHelper.sendTestPushNotification(getApplication())
+                val totalSec = _timerTotalSeconds.value
+                val formatted = if (totalSec >= 3600) {
+                    "${totalSec / 3600}h ${(totalSec % 3600) / 60}m"
+                } else if (totalSec >= 60) {
+                    "${totalSec / 60}m ${totalSec % 60}s"
+                } else {
+                    "${totalSec}s"
+                }
+                NotificationHelper.sendTimerFinishedNotification(getApplication(), formatted)
+                SoundManager.playSound(getApplication(), AlarmSoundType.STEAMPUNK_CHIME, false)
+                delay(5000)
+                SoundManager.stopSound()
             }
         }
     }
@@ -255,6 +290,7 @@ class SpiderClockViewModel(application: Application) : AndroidViewModel(applicat
 
     fun resetTimer() {
         pauseTimer()
+        SoundManager.stopSound()
         _timerRemainingSeconds.value = _timerTotalSeconds.value
     }
 }

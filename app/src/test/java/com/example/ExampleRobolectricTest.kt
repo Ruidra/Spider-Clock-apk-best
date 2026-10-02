@@ -58,4 +58,13 @@ class ExampleRobolectricTest {
         val weeklyAlarm = AlarmItem(hour = 9, minute = 0, daysMask = 2) // Monday only
         assertEquals("Weekly on Mon", weeklyAlarm.getDaysDescription())
     }
+
+    @Test
+    fun `custom timer total seconds calculation`() {
+        val hours = 1
+        val minutes = 25
+        val seconds = 30
+        val total = (hours * 3600) + (minutes * 60) + seconds
+        assertEquals(5130, total)
+    }
 }
