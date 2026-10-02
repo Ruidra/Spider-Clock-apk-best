@@ -170,19 +170,16 @@ jobs:
           RELEASE_TAG="debug-apk-build-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}"
           RELEASE_TITLE="Debug APK Build #${GITHUB_RUN_NUMBER}"
 
-          NOTES=$(cat <<EOF
-          ### Automated Debug APK Build
+          NOTES="### Automated Debug APK Build
 
-          This is an automatically generated debug APK built by GitHub Actions.
+This is an automatically generated debug APK built by GitHub Actions.
 
-          - **Build Run:** #${GITHUB_RUN_NUMBER} (Attempt: ${GITHUB_RUN_ATTEMPT})
-          - **Commit SHA:** \`${GITHUB_SHA}\`
-          - **Environment:** Ubuntu Linux (${RUNNER_OS:-Linux})
-          - **Status:** Testing Build
+- **Build Run:** #${GITHUB_RUN_NUMBER} (Attempt: ${GITHUB_RUN_ATTEMPT})
+- **Commit SHA:** \`${GITHUB_SHA}\`
+- **Environment:** Ubuntu Linux (${RUNNER_OS:-Linux})
+- **Status:** Testing Build
 
-          > **Notice:** This APK is intended for testing and development purposes. It is **not** a Play Store production release and is signed only with a temporary debug keystore.
-          EOF
-          )
+> **Notice:** This APK is intended for testing and development purposes. It is **not** a Play Store production release and is signed only with a temporary debug keystore."
 
           gh release create "$RELEASE_TAG" "$ASSET_PATH" \
             --title "$RELEASE_TITLE" \
@@ -213,26 +210,26 @@ jobs:
             echo "Release URL: $RELEASE_URL"
             echo "Asset Filename: $ASSET_NAME"
 
-            cat <<EOF >> "$GITHUB_STEP_SUMMARY"
-            ## 🚀 Debug APK Published Successfully!
-
-            - **Release Tag:** \`${RELEASE_TAG}\`
-            - **Direct Download:** [View GitHub Release & Download APK](${RELEASE_URL})
-            - **APK Asset Name:** \`${ASSET_NAME}\`
-
-            You can download the APK directly onto your phone from the **Assets** section of the release above.
-            Additionally, the standard GitHub Actions artifact (\`app-debug-apk\`) is available as a backup.
-            EOF
+            {
+              echo "## 🚀 Debug APK Published Successfully!"
+              echo ""
+              echo "- **Release Tag:** \`${RELEASE_TAG}\`"
+              echo "- **Direct Download:** [View GitHub Release & Download APK](${RELEASE_URL})"
+              echo "- **APK Asset Name:** \`${ASSET_NAME}\`"
+              echo ""
+              echo "You can download the APK directly onto your phone from the **Assets** section of the release above."
+              echo "Additionally, the standard GitHub Actions artifact (\`app-debug-apk\`) is available as a backup."
+            } >> "$GITHUB_STEP_SUMMARY"
           else
             echo "::warning::GitHub Release creation did not succeed or was skipped."
             echo "The debug APK build and verification succeeded."
             echo "The GitHub Actions artifact named 'app-debug-apk' remains safely available for download."
 
-            cat <<EOF >> "$GITHUB_STEP_SUMMARY"
-            ## ⚠️ Debug APK Built (Artifact Available)
-
-            - The debug APK was compiled and verified successfully.
-            - GitHub Release publishing was not completed, but the APK is safely stored in GitHub Actions.
-            - **Download:** Download the \`app-debug-apk\` artifact directly from the **Artifacts** section at the bottom of this workflow run page.
-            EOF
+            {
+              echo "## ⚠️ Debug APK Built (Artifact Available)"
+              echo ""
+              echo "- The debug APK was compiled and verified successfully."
+              echo "- GitHub Release publishing was not completed, but the APK is safely stored in GitHub Actions."
+              echo "- **Download:** Download the \`app-debug-apk\` artifact directly from the **Artifacts** section at the bottom of this workflow run page."
+            } >> "$GITHUB_STEP_SUMMARY"
           fi
